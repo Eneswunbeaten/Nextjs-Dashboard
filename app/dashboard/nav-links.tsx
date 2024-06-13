@@ -1,5 +1,5 @@
 'use client';
- 
+
 import {
   UserGroupIcon,
   HomeIcon,
@@ -8,12 +8,29 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
- 
-// ...
- 
+import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
+
+// LinkItem arayüzünü güncelliyoruz
+interface LinkItem {
+  name: string;
+  href: string;
+  icon: ForwardRefExoticComponent<
+    Omit<SVGProps<SVGSVGElement>, 'ref'> & {
+      title?: string | undefined;
+      titleId?: string | undefined;
+    } & RefAttributes<SVGSVGElement>
+  >;
+}
+
+const links: LinkItem[] = [
+  { name: 'Home', href: '/', icon: HomeIcon },
+  { name: 'Users', href: '/users', icon: UserGroupIcon },
+  { name: 'Documents', href: '/documents', icon: DocumentDuplicateIcon },
+];
+
 export default function NavLinks() {
   const pathname = usePathname();
- 
+
   return (
     <>
       {links.map((link) => {
